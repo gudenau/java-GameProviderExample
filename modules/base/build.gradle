@@ -1,0 +1,13 @@
+tasks.register('run', JavaExec) {
+    dependsOn jar
+
+    group = 'run'
+    description = 'Runs the example program without mods'
+    classpath = files(jar.archiveFile, sourceSets.main.runtimeClasspath) - sourceSets.main.output
+    mainClass = 'com.example.base.Launcher'
+    workingDir = rootProject.projectDir.toPath().resolve('run').toFile()
+
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(project.javaVersion)
+    }
+}

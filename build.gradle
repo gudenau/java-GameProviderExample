@@ -1,0 +1,22 @@
+allprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+
+        maven {
+            url = 'https://maven.fabricmc.net/'
+            name = 'FabricMC'
+        }
+    }
+
+    dependencies {
+        compileOnly "org.jetbrains:annotations:${rootProject.annotationsVersion}"
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(project.javaVersion)
+        }
+    }
+}

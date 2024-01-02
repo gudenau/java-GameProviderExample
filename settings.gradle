@@ -1,0 +1,19 @@
+import java.nio.file.Files
+
+rootProject.name = 'GameProviderExample'
+
+var moduleDir = rootProject.projectDir.toPath().resolve('modules')
+try(var stream = Files.list(moduleDir)) {
+    stream.filter(Files::isDirectory)
+        .sorted((a, b) -> a.getFileName().toString().compareToIgnoreCase(b.getFileName().toString()))
+        .forEachOrdered((path) -> {
+            var script = path.resolve('build.gradle')
+            if(!(Files.isReadable(script) && Files.isRegularFile(script))) {
+                return
+            }
+
+            var name = path.getFileName().toString()
+            include(name)
+            project(':' + name).projectDir = path.toFile()
+        })
+}

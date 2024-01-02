@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "example_loader",
+  "version": "1.0.0",
+  "environment": "*",
+  "mixins": [
+    "example.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "java": ">=17"
+  }
+}

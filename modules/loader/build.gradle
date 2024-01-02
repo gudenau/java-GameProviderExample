@@ -1,0 +1,38 @@
+dependencies {
+    implementation "net.fabricmc:fabric-loader:${project.fabricLoaderVersion}"
+    implementation "net.fabricmc:tiny-mappings-parser:${project.tinyMappingsParserVersion}"
+
+    implementation("net.fabricmc:sponge-mixin:${mixinVersion}") {
+        exclude(group: 'com.google.code.gson')
+        exclude(group: 'com.google.guava')
+    }
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    implementation "net.fabricmc:tiny-remapper:${project.tinyRemapperVersion}"
+    implementation "net.fabricmc:access-widener:${project.accessWidenerVersion}"
+
+    implementation "org.ow2.asm:asm:${project.asmVersion}"
+    implementation "org.ow2.asm:asm-analysis:${project.asmVersion}"
+    implementation "org.ow2.asm:asm-commons:${project.asmVersion}"
+    implementation "org.ow2.asm:asm-tree:${project.asmVersion}"
+    implementation "org.ow2.asm:asm-util:${project.asmVersion}"
+
+    implementation project(':base')
+}
+
+tasks.register('runModded', JavaExec) {
+    dependsOn jar
+
+    group = 'run'
+    description = 'Runs the example program though Fabric Loader'
+    classpath = files(jar.archiveFile, sourceSets.main.runtimeClasspath) - sourceSets.main.output
+    mainClass = 'com.example.loader.Main'
+    workingDir = rootProject.projectDir.toPath().resolve('run').toFile()
+    jvmArgs += [
+        '-Dfabric.development=true'
+    ]
+
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(project.javaVersion)
+    }
+}
