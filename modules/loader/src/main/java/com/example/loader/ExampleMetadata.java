@@ -96,8 +96,7 @@ public final class ExampleMetadata implements ModMetadata {
 
     @Override
     public Collection<String> getLicense() {
-        //TODO
-        return List.of();
+        return List.of("CC0");
     }
 
     @Override
